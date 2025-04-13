@@ -28,6 +28,7 @@ interface Incharge {
   department: string;
   specialization: string;
   experience: string;
+  photoUrl: string;
   qualification: Qualification[];
 }
 
@@ -41,6 +42,27 @@ export default function Incharges() {
     specialization: '',
     experience: ''
   });
+
+  const convertToRawGitHubURL = (url: string): string => {
+    try {
+      const githubPrefix = "https://github.com/";
+      const rawPrefix = "https://raw.githubusercontent.com/";
+  
+      if (url.startsWith(githubPrefix)) {
+        const parts = url.replace(githubPrefix, "").split("/");
+        if (parts.length >= 5 && parts[2] === "blob") {
+          const [username, repo, , branch, ...pathParts] = parts;
+          return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+            "/"
+          )}`;
+        }
+      }
+      return url; // Return the original URL if it's not a valid GitHub link
+    } catch (error) {
+      console.error("Error converting GitHub URL:", error);
+      return url;
+    }
+  };
 
   const [assistants, setAssistants] = useState<Assistant[]>([
     {
@@ -140,12 +162,14 @@ export default function Incharges() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {incharges.map((incharge) => (
-          <div key={incharge.id} className="bg-white p-6 rounded-full shadow-md">
+          <div key={incharge.id} className="bg-white p-6 rounded-md shadow-md">
+            <div className='flex justify-center items-center'>
             <img
-              src={incharge.photoUrl || 'https://via.placeholder.com/150'}
+              src={convertToRawGitHubURL(incharge.photoUrl) || 'https://via.placeholder.com/150'}
               alt={incharge.name}
-              className="w-full h-32 object-cover mb-4"
+              className="w-32 h-32 rounded-full object-cover mb-4"
             />
+            </div>
             <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">
               {incharge.name}
             </h3>
