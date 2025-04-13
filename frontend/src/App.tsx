@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard.tsx';
-import Projects from './pages/Projects.tsx';
 import Equipment from './pages/Equipment.tsx';
 import Incharges from './pages/Incharges.tsx';
 import Assistant from './pages/Assistant.tsx';
@@ -12,7 +11,6 @@ function App() {
       <Layout>
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/projects" element={<Projects />} />
           <Route path="/equipment" element={<Equipment />} />
           <Route path="/incharges" element={<Incharges />} />
           <Route path="/assistant" element={<Assistant />} />

@@ -6,7 +6,6 @@ export default function Sidebar() {
 
   const navItems = [
     { icon: Home, label: 'Dashboard', path: '/' },
-    { icon: Flask, label: 'Lab Projects', path: '/projects' },
     { icon: Microscope, label: 'Equipment', path: '/equipment' },
     { icon: Users, label: 'Lab Incharges', path: '/incharges' },
     { icon: MessageCircle, label: 'AI Assistant', path: '/assistant' },
