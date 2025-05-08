@@ -13,7 +13,7 @@ app.use(
 	})
 );
 
-// connectDB();
+connectDB();
 
 app.use("/api/lab", labRoutes);
 app.use("/api/chat", chatRoutes);

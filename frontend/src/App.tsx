@@ -5,7 +5,7 @@ import Equipment from './pages/Equipment.tsx';
 import Incharges from './pages/Incharges.tsx';
 import Assistant from './pages/Assistant.tsx';
 
-function App() {
+function App() {  
   return (
     <Router>
       <Layout>
