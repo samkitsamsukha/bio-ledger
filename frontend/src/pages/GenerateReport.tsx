@@ -51,6 +51,8 @@ export default function GenerateReport() {
     const generatePDF = () => {
         if (!lab) return;
 
+        const startTime = performance.now(); // Record the start time
+
         const doc = new jsPDF();
         doc.setFont('Times', 'Normal');
         const pageWidth = doc.internal.pageSize.getWidth();
@@ -217,6 +219,11 @@ export default function GenerateReport() {
         }
 
         doc.save(`${lab.name.replace(/\s+/g, '_')}_${format}_Report.pdf`);
+        const endTime = performance.now(); // Record the end time
+        const generationTime = (endTime - startTime) / 1000; // Calculate time in seconds
+        console.log(`Start Time: ${startTime} seconds`);
+        console.log(`End Time: ${endTime} seconds`);
+        console.log(`Report generation time: ${generationTime} seconds`);
     };
 
 
