@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Plus, ChevronDown, ChevronUp } from 'lucide-react';
-import Modal from '../components/Modal';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 import axios from 'axios';
+import AddProjectModal from '../components/AddProjectModal';
 
 interface Project {
   _id: string;
@@ -21,20 +21,6 @@ interface Project {
 export default function Dashboard() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [expandedProject, setExpandedProject] = useState<string | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [newProject, setNewProject] = useState({
-    title: '',
-    subtitle: '',
-    bsl: 'BSL-1',
-    startDate: '',
-    endDate: '',
-    aim: '',
-    objectives: [''],
-    methodology: '',
-    equipment: [''],
-    teamMembers: [''],
-    results: ['']
-  });
 
   useEffect(() => {
     fetchProjects();
@@ -54,41 +40,11 @@ export default function Dashboard() {
     setExpandedProject(expandedProject === projectId ? null : projectId);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:5000/api/lab/projects', newProject);
-      fetchProjects();
-      setIsAddModalOpen(false);
-      setNewProject({
-        title: '',
-        subtitle: '',
-        bsl: 'BSL-1',
-        startDate: '',
-        endDate: '',
-        aim: '',
-        objectives: [''],
-        methodology: '',
-        equipment: [''],
-        teamMembers: [''],
-        results: ['']
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Welcome to BioLedger</h1>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-        >
-          <Plus size={20} />
-          Add Project
-        </button>
+          <AddProjectModal />
       </div>
 
       <div className="space-y-6">
@@ -168,28 +124,6 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
-
-      <Modal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        title="Add New Project"
-      >
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <input type="text" placeholder="Title" value={newProject.title} onChange={(e) => setNewProject({ ...newProject, title: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <input type="text" placeholder="Subtitle" value={newProject.subtitle} onChange={(e) => setNewProject({ ...newProject, subtitle: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <input type="text" placeholder="Aim" value={newProject.aim} onChange={(e) => setNewProject({ ...newProject, aim: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <textarea placeholder="Methodology" value={newProject.methodology} onChange={(e) => setNewProject({ ...newProject, methodology: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <input type="date" value={newProject.startDate} onChange={(e) => setNewProject({ ...newProject, startDate: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <input type="date" value={newProject.endDate} onChange={(e) => setNewProject({ ...newProject, endDate: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md" required />
-          <select value={newProject.bsl} onChange={(e) => setNewProject({ ...newProject, bsl: e.target.value })} className="w-full px-3 py-2 border border-gray-300 rounded-md">
-            <option value="BSL-1">BSL-1</option>
-            <option value="BSL-2">BSL-2</option>
-            <option value="BSL-3">BSL-3</option>
-            <option value="BSL-4">BSL-4</option>
-          </select>
-          <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Submit</button>
-        </form>
-      </Modal>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Home, FlaskRound as Flask, Microscope, Users, MessageCircle } from 'lucide-react';
+import { Home, FlaskRound as Flask, Microscope, Users, File, MessageCircle } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 export default function Sidebar() {
@@ -9,15 +9,16 @@ export default function Sidebar() {
     { icon: Microscope, label: 'Equipment', path: '/equipment' },
     { icon: Users, label: 'Lab Incharges', path: '/incharges' },
     { icon: MessageCircle, label: 'AI Assistant', path: '/assistant' },
+    { icon: File, label: 'Generate Report', path: '/generate-report' },
   ];
 
   return (
-    <div className="h-screen w-64 bg-indigo-900 text-white p-6">
-      <div className="flex items-center gap-3 mb-10">
+    <div className="min-h-screen w-64 bg-indigo-900 text-white p-6">
+      <div className="fixed flex items-center gap-3">
         <Flask size={32} className="text-indigo-300" />
         <h1 className="text-2xl font-bold">BioLedger</h1>
       </div>
-      <nav>
+      <nav className='fixed top-24'>
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
@@ -37,6 +38,7 @@ export default function Sidebar() {
           );
         })}
       </nav>
+      <button className='fixed bottom-12 w-52 px-6 py-3 rounded-xl text-red-700 bg-red-200 font-extrabold text-2xl border-2 border-red-700'>ALERT</button>
     </div>
   );
 }

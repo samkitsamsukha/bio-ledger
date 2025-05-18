@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Plus } from 'lucide-react';
 import axios from 'axios';
 import Modal from '../components/Modal';
+import AssistantFormModal from '../components/AssistantFormModal';
 
 interface Qualification {
   degree: string;
@@ -78,9 +78,13 @@ export default function Incharges() {
     }
   ]);
 
-  const handleAssistantChange = (i: number, key: keyof Assistant, value: any) => {
+  const handleAssistantChange = (
+    i: number,
+    key: keyof Assistant,
+    value: string
+  ) => {
     const updated = [...assistants];
-    updated[i][key] = value;
+    updated[i][key] = value as never;
     setAssistants(updated);
   };
 
@@ -88,10 +92,10 @@ export default function Incharges() {
     aIdx: number,
     qIdx: number,
     key: keyof Qualification,
-    value: any
+    value: string | number
   ) => {
     const updated = [...assistants];
-    updated[aIdx].qualification[qIdx][key] = value;
+    updated[aIdx].qualification[qIdx][key] = value.toString();
     setAssistants(updated);
   };
 
@@ -151,13 +155,7 @@ export default function Incharges() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Lab Incharges</h1>
-        <button
-          onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
-        >
-          <Plus size={20} />
-          Add Incharge
-        </button>
+        <AssistantFormModal onAdd={fetchIncharges} />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -207,7 +205,7 @@ export default function Incharges() {
                 </label>
                 <input
                   type="text"
-                  value={(newIncharge as any)[key]}
+                  value={newIncharge[key as keyof typeof newIncharge]}
                   onChange={(e) =>
                     setNewIncharge((prev) => ({ ...prev, [key]: e.target.value }))
                   }
@@ -235,7 +233,9 @@ export default function Incharges() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
                   <input
                     type={type}
-                    value={(assistant as any)[key]}
+                    value={typeof assistant[key as keyof Assistant] === 'string' || typeof assistant[key as keyof Assistant] === 'number'
+                      ? assistant[key as keyof Assistant] as string | number
+                      : ''}
                     onChange={(e) => handleAssistantChange(aIdx, key as keyof Assistant, e.target.value)}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     required
@@ -271,7 +271,7 @@ export default function Incharges() {
                         <label className="block text-sm text-gray-600 mb-1">{label}</label>
                         <input
                           type={type}
-                          value={(q as any)[key]}
+                          value={q[key as keyof Qualification]}
                           onChange={(e) =>
                             handleQualificationChange(aIdx, qIdx, key as keyof Qualification, e.target.value)
                           }

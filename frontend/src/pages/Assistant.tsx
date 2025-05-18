@@ -1,7 +1,7 @@
 "use client";
 
 import { Bot, MessageCircleMore, User } from "lucide-react";
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const ChatbotUI = () => {
   const [messages, setMessages] = useState([
@@ -28,7 +28,7 @@ const ChatbotUI = () => {
 setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
       console.log(data.reply);
 
-    } catch (error) {
+    } catch {
       setMessages((prev) => [
         ...prev,
         { sender: "bot", text: "Sorry, there was an error processing your request." },
@@ -41,12 +41,12 @@ setMessages((prev) => [...prev, { sender: "bot", text: data.reply }]);
   }, []);
 
   useEffect(() => {
-    // @ts-expect-error
+    // @ts-expect-error: chatEndRef may be null or not have scrollIntoView, but we ensure it's used safely
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       <div className="w-[800px] rounded-lg shadow-lg border border-indigo-800 bg-white">
         {/* Header */}
         <div className="flex items-center justify-between px-4 py-2 bg-indigo-800 text-white rounded-t-lg">

@@ -1,6 +1,14 @@
 import mongoose from "mongoose";
 
 const labSchema = new mongoose.Schema({
+    name:{
+        type: String,
+        required: true
+    },
+    location:{
+        type: String,
+        required: true
+    },
     projects:{
         type: [
             {
@@ -122,7 +130,7 @@ const labSchema = new mongoose.Schema({
                 },
                 photoUrl:{
                     type: String,
-                    required: true
+                    required: false
                 },
                 manufacturer:{
                     type: String,
@@ -145,6 +153,105 @@ const labSchema = new mongoose.Schema({
             }
         ]
     },
+    alerts:{
+        type:[
+            {
+                title: {
+                    type: String,
+                },
+                category: {
+                    type: String,
+                    enum: ["Equipment Failure", "Chemical Spill", "Fire", "Gas Leak", "Injury", "Power Outage", "Security Breach"],
+                    required: true
+                },
+                description: {
+                    type: String,
+                },
+            }
+        ]
+    },
+    contacts:{
+        neighborhood: {
+            type: [
+                {
+                    name:{
+                        type: String,
+                        required: true
+                    },
+                    email:{
+                        type: String,
+                        required: true
+                    },
+                    phone:{
+                        type: String,
+                        required: true
+                    }
+                }
+            ]
+        },
+        leadAssistant:{
+            name:{
+                type: String,
+                required: true
+            },
+            email:{
+                type: String,
+                required: true
+            },
+            phone:{
+                type: String,
+                required: true
+            }
+        },
+        medical: {
+            type: {
+                name:{
+                    type: String,
+                    required: true
+                },
+                email:{
+                    type: String,
+                    required: true
+                },
+                phone:{
+                    type: String,
+                    required: true
+                }
+            }
+        },
+        electric: {
+            type: {
+                name:{
+                    type: String,
+                    required: true
+                },
+                email:{
+                    type: String,
+                    required: true
+                },
+                phone:{
+                    type: String,
+                    required: true
+                }
+            }
+        },
+        security: {
+            type: {
+                name:{
+                    type: String,
+                    required: true
+                },
+                email:{
+                    type: String,
+                    required: true
+                },
+                phone:{
+                    type: String,
+                    required: true
+                }
+            }
+        }
+    }
 })
 
 const Lab = mongoose.model("Lab", labSchema);

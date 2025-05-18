@@ -1,43 +1,35 @@
 import express from "express";
 import {
+	seedLab,
+	postProject,
 	getAllProjects,
+	postEquipment,
+	getAllEquipment,
+	postAssistant,
 	getAllAssistants,
-	getAllEquipments,
-	addAssistant,
-	addProject,
-	addEquipment,
+	addAlert,
+	getAllAlerts,
+	updateAlerts,
+	getContacts,
+	postContacts,
+	getLab
 } from "../controllers/labController.js";
 import Lab from "../models/labModel.js";
 
 const router = express.Router();
 
-// Seed route
-router.post("/init", async (req, res) => {
-	try {
-		const existing = await Lab.findOne();
-		if (existing)
-			return res.status(400).json({ message: "Lab already initialized" });
-
-		const newLab = new Lab({
-			projects: [],
-			assistants: [],
-			equipments: [],
-		});
-
-		await newLab.save();
-		res.status(201).json({ message: "Lab initialized" });
-	} catch (err) {
-		res.status(500).json({ message: err.message });
-	}
-});
-
-// Main Lab routes
+router.post("/seed", seedLab);
+router.post("/project", postProject);
 router.get("/projects", getAllProjects);
+router.post("/equipment", postEquipment);
+router.get("/equipments", getAllEquipment);
+router.post("/assistant", postAssistant);
 router.get("/assistants", getAllAssistants);
-router.get("/equipments", getAllEquipments);
-
-router.post("/assistants", addAssistant);
-router.post("/projects", addProject);
-router.post("/equipments", addEquipment);
+router.post("/alert", addAlert);
+router.get("/alerts", getAllAlerts);
+router.put("/alerts", updateAlerts);
+router.get("/contacts", getContacts);
+router.post("/contacts", postContacts);
+router.get("/lab", getLab);
 
 export default router;

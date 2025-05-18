@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard.tsx';
 import Equipment from './pages/Equipment.tsx';
 import Incharges from './pages/Incharges.tsx';
 import Assistant from './pages/Assistant.tsx';
+import GenerateReport from './pages/GenerateReport.tsx';
 
 function App() {  
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/equipment" element={<Equipment />} />
           <Route path="/incharges" element={<Incharges />} />
           <Route path="/assistant" element={<Assistant />} />
+          <Route path="/generate-report" element={<GenerateReport />} />
         </Routes>
       </Layout>
     </Router>
