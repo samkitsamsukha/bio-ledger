@@ -143,7 +143,7 @@ export default function Incharges() {
     };
 
     axios
-      .post('http://localhost:5000/api/lab/assistants', payload)
+      .post('http://localhost:5000/api/lab/assistant', payload)
       .then(() => {
         setIsAddModalOpen(false);
         fetchIncharges();
@@ -160,26 +160,26 @@ export default function Incharges() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {incharges.map((incharge) => (
-          <div key={incharge.id} className="bg-white p-6 rounded-md shadow-md">
+          <div key={incharge?.id} className="bg-white p-6 rounded-md shadow-md">
             <div className='flex justify-center items-center'>
             <img
-              src={convertToRawGitHubURL(incharge.photoUrl) || 'https://via.placeholder.com/150'}
-              alt={incharge.name}
+              src={convertToRawGitHubURL(incharge?.photoUrl) || 'https://via.placeholder.com/150'}
+              alt={incharge?.name}
               className="w-32 h-32 rounded-full object-cover mb-4"
             />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 text-center mb-2">
-              {incharge.name}
+              {incharge?.name}
             </h3>
-            <p className="text-indigo-600 text-center mb-4 italic font-bold">{incharge.role}</p>
+            <p className="text-indigo-600 text-center mb-4 italic font-bold">{incharge?.role}</p>
             <div className="text-sm text-gray-600 space-y-1">
-              <p><strong>Department:</strong> {incharge.department}</p>
-              <p><strong>Specialization:</strong> {incharge.specialization}</p>
-              <p><strong>Experience:</strong> {incharge.experience}</p>
+              <p><strong>Department:</strong> {incharge?.department}</p>
+              <p><strong>Specialization:</strong> {incharge?.specialization}</p>
+              <p><strong>Experience:</strong> {incharge?.experience}</p>
             </div>
             <div className="mt-1">
               <h4 className="text-sm font-bold text-gray-600 mb-2">Qualifications</h4>
-              {incharge.qualification?.map((item, idx) => (
+              {incharge?.qualification?.map((item, idx) => (
                 <div key={idx} className="border p-3 rounded-md mb-3 bg-gray-50 text-sm">
                   <p><strong>Degree:</strong> {item.degree}</p>
                   <p><strong>Institution:</strong> {item.institution}</p>
