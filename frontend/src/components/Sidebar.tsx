@@ -13,7 +13,7 @@ export default function Sidebar() {
   ];
 
   const sendMail = async () => {
-  const recipients = ['oojamchaudhary.is23@rvce.edu.in', 'samkitsamsukha.is23@rvce.edu.in', 'sathvikhegde.is23@rvce.edu.in', 'varenyathaker.is23@rvce.edu.in', 'vinweb@gmail.com', 'vidhisamsukha@gmail.com', 'mdhuzaifs.is23@rvce.edu.in', 'mahalakshmibn.is23@rvce.edu.in'];
+  const recipients = ['oojamchaudhary.is23@rvce.edu.in', 'samkitsamsukha.is23@rvce.edu.in', 'sathvikhegde.is23@rvce.edu.in', 'mahalakshmibn.is23@rvce.edu.in', 'rajeshwarim@rvce.edu.in'];
   const labName = 'RVCE BioTechnology Lab';
   const alertMessage = 'Attention: An unforeseen situation has occurred in the lab. As you are in the vicinity, please take necessary precautions and stay alert. Your safety is our priority. More details will be communicated via ensuing emails. Stay Safe!';
 
