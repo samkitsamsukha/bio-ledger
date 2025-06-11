@@ -256,6 +256,27 @@ export default function GenerateWHOReport() {
         doc.save(`${lab.name.replace(/\s+/g, '_')}_WHO_Report.pdf`);
     };
 
+      const convertToRawGitHubURL = (url: string): string => {
+    try {
+      const githubPrefix = "https://github.com/";
+      const rawPrefix = "https://raw.githubusercontent.com/";
+  
+      if (url.startsWith(githubPrefix)) {
+        const parts = url.replace(githubPrefix, "").split("/");
+        if (parts.length >= 5 && parts[2] === "blob") {
+          const [username, repo, , branch, ...pathParts] = parts;
+          return `${rawPrefix}${username}/${repo}/${branch}/${pathParts.join(
+            "/"
+          )}`;
+        }
+      }
+      return url; // Return the original URL if it's not a valid GitHub link
+    } catch (error) {
+      console.error("Error converting GitHub URL:", error);
+      return url;
+    }
+  };
+
     return (
         <div className="p-8 max-w-2xl mx-auto font-sans bg-gray-50 text-center rounded-lg shadow-md">
             <h2 className="text-2xl font-bold mb-3 text-gray-700">WHO-Style Report Generator</h2>
@@ -263,7 +284,7 @@ export default function GenerateWHOReport() {
                 Click the button below to generate a formal, single-column biosafety report
                 with tabular data, styled according to WHO guidelines.
             </p>
-            <img src={'./who.png'} alt="WHO Logo" />
+            <img src={convertToRawGitHubURL('https://github.com/samkitsamsukha/bio-ledger/blob/main/assets/who.png')} alt="WHO Logo" />
             <button
                 onClick={generateWHOFormatReport}
                 disabled={!lab}
