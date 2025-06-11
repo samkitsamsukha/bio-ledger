@@ -1,4 +1,4 @@
-const generatePDF = () => {
+export const generatePdf = () => {
     if (!lab) return;
 
     const startTime = performance.now(); // Record the start time

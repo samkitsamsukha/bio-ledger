@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import jsPDF from 'jspdf';
 import axios from 'axios';
+import GenerateWHOReport from './GenerateReport_who';
 
 // Interface definitions
 interface Project {
@@ -483,19 +484,19 @@ export default function GenerateReport() {
                         <span className="text-gray-500">IEEE Format Preview</span>
                     </div>
                     <h3 className="text-xl font-semibold text-center">IEEE Format</h3>
+                    <button
+                    onClick={generatePDF}
+                    disabled={!lab}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-blue-700 transition disabled:bg-gray-400"
+                >
+                    Download {format} Report
+                </button>
                 </div>
 
-                <div
-                    className={`border rounded-xl p-4 shadow-md cursor-pointer w-full sm:w-1/2 ${format === 'WHO' ? 'ring-2 ring-blue-500' : ''}`}
-                >
-                    <div className="w-full h-32 bg-gray-300 flex items-center justify-center rounded-lg mb-2 cursor-not-allowed">
-                        <span className="text-gray-500">WHO Format (N/A)</span>
-                    </div>
-                    <h3 className="text-xl font-semibold text-center text-gray-400">WHO Format</h3>
-                </div>
+                <div><GenerateWHOReport /></div>
             </div>
 
-            <div className="mt-8 text-center">
+            {/* <div className="mt-8 text-center">
                 <button
                     onClick={generatePDF}
                     disabled={!lab}
@@ -504,7 +505,7 @@ export default function GenerateReport() {
                     Download {format} Report
                 </button>
                 {!lab && <p className="text-red-500 mt-2">Lab data is loading or failed to load.</p>}
-            </div>
+            </div> */}
         </div>
     );
 }

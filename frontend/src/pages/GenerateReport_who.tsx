@@ -263,6 +263,7 @@ export default function GenerateWHOReport() {
                 Click the button below to generate a formal, single-column biosafety report
                 with tabular data, styled according to WHO guidelines.
             </p>
+            <img src={'./who.png'} alt="WHO Logo" />
             <button
                 onClick={generateWHOFormatReport}
                 disabled={!lab}
