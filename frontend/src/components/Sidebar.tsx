@@ -12,6 +12,31 @@ export default function Sidebar() {
     { icon: File, label: 'Generate Report', path: '/generate-report' },
   ];
 
+  const sendMail = async () => {
+  const recipients = ['oojamchaudhary.is23@rvce.edu.in', 'samkitsamsukha.is23@rvce.edu.in', 'sathvikhegde.is23@rvce.edu.in', 'varenyathaker.is23@rvce.edu.in', 'vinweb@gmail.com', 'vidhisamsukha@gmail.com', 'mdhuzaifs.is23@rvce.edu.in', 'mahalakshmibn.is23@rvce.edu.in'];
+  const labName = 'RVCE BioTechnology Lab';
+  const alertMessage = 'Attention: An unforeseen situation has occurred in the lab. As you are in the vicinity, please take necessary precautions and stay alert. Your safety is our priority. More details will be communicated via ensuing emails. Stay Safe!';
+
+  try {
+    const res = await fetch('http://localhost:5000/api/lab/send-alert', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ recipients, labName, alertMessage }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert('Alert email sent!');
+    } else {
+      alert(`Error: ${data.message}`);
+    }
+  } catch (err) {
+    alert('Failed to send alert email.');
+    console.error(err);
+  }
+};
+
+
   return (
     <div className="min-h-screen w-64 bg-indigo-900 text-white p-6">
       <div className="fixed flex items-center gap-3">
@@ -38,7 +63,9 @@ export default function Sidebar() {
           );
         })}
       </nav>
-      <button className='fixed bottom-12 w-52 px-6 py-3 rounded-xl text-red-700 bg-red-200 font-extrabold text-2xl border-2 border-red-700'>ALERT</button>
+      <button onClick={()=>{
+        sendMail()
+      }} className='fixed bottom-12 w-52 px-6 py-3 rounded-xl text-red-700 bg-red-200 font-extrabold text-2xl border-2 border-red-700'>ALERT</button>
     </div>
   );
 }

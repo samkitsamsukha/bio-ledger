@@ -12,9 +12,10 @@ import {
 	updateAlerts,
 	getContacts,
 	postContacts,
-	getLab
+	getLab,
 } from "../controllers/labController.js";
 import Lab from "../models/labModel.js";
+import {sendAlertMail} from "../controllers/sendAlertMail.js";
 
 const router = express.Router();
 
@@ -31,5 +32,20 @@ router.put("/alerts", updateAlerts);
 router.get("/contacts", getContacts);
 router.post("/contacts", postContacts);
 router.get("/lab", getLab);
+router.post("/send-alert", async (req, res) => {
+	const { recipients, labName, alertMessage } = req.body;
+	try {
+		await sendAlertMail({
+			recipients,
+			labName,
+			alertMessage,
+			timestamp: Date.now(),
+		});
+		res.status(200).json({ message: "Alert email sent successfully" });
+	} catch (error) {
+		console.error("Email send failed:", error);
+		res.status(500).json({ message: "Failed to send alert email" });
+	}
+});
 
 export default router;
